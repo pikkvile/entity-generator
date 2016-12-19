@@ -1,7 +1,6 @@
 package com.pikkvile.tools.eg;
 
 import java.util.Collection;
-import java.util.List;
 
 public class Entity {
 
