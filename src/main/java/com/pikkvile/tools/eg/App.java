@@ -33,7 +33,8 @@ public class App {
                     .map(SrcFileReader::read)
                     .orElseThrow(() -> new IllegalArgumentException("No sources provided"));
         }
-        EntityParser entityParser = new EntityParser(config.getDefaultPackage());
+        TypeParser typeParser = new TypeParser(config);
+        EntityParser entityParser = new EntityParser(typeParser, config);
         entitiesSrc.stream().map(entityParser::parse);
     }
 

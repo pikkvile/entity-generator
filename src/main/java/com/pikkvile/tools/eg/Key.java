@@ -7,7 +7,8 @@ public enum Key {
 
     SOURCE("-S", "--source="),
     OUTPUT("-O", "--output="),
-    PACKAGE("-P", "--package=");
+    PACKAGE("-P", "--package="),
+    TYPE("-T", "--default-type=");
 
     private final String shortRef;
     private final String longRef;

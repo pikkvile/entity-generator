@@ -9,4 +9,9 @@ public class FullType {
         this.pkgName = pkgName;
         this.selfName = selfName;
     }
+
+    @Override
+    public String toString() {
+        return pkgName.isEmpty() ? selfName : pkgName + "." + selfName;
+    }
 }
