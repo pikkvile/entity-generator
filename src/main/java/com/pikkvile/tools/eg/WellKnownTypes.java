@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum WellKnownTypes {
-    STRING("String", ""),
+    STRING("String", "java.lang"),
     INT("int", "");
     private final String selfName;
     private final String packageName;

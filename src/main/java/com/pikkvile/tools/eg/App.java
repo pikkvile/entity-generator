@@ -35,7 +35,8 @@ public class App {
         }
         TypeParser typeParser = new TypeParser(config);
         EntityParser entityParser = new EntityParser(typeParser, config);
-        entitiesSrc.stream().map(entityParser::parse);
+        EntityPrinter entityPrinter = new EntityPrinter(config);
+        entitiesSrc.stream().map(entityParser::parse).forEach(entityPrinter::print);
     }
 
     private void parseArgs() {
