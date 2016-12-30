@@ -19,13 +19,15 @@ class EntityParserTest extends Specification {
         when:
         def e1 = entityParser.parse("E1: f")
         then:
-        e1.toString() == config.defaultPackage + ".E1: " + config.defaultType + " f"
+        def defaultType = typeParser.parseFullType(config.defaultType)
+        config.defaultPackage + ".E1: " + defaultType + " f" == e1.toString()
     }
 
     def "parse entity with many fields and default package"() {
         when:
         def e2 = entityParser.parse("E2: int i, s, com.example.Clazz clz")
         then:
-        e2.toString() == "com.pikkvile.project.entities.E2: int i, " + config.defaultType + " s, com.example.Clazz clz"
+        def defaultType = typeParser.parseFullType(config.defaultType)
+        e2.toString() == "com.pikkvile.project.entities.E2: int i, " + defaultType + " s, com.example.Clazz clz"
     }
 }
