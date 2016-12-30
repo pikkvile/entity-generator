@@ -1,5 +1,7 @@
 package com.pikkvile.tools.eg;
 
+import com.pikkvile.tools.eg.configuration.Config;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;

@@ -30,7 +30,7 @@ public class FullType {
 
     @Override
     public String toString() {
-        return pkgName.isEmpty() || isEmbedded() ? selfName : pkgName + "." + selfName;
+        return pkgName.isEmpty() ? selfName : pkgName + "." + selfName;
     }
 
     public void printPackage(PrintWriter writer) {

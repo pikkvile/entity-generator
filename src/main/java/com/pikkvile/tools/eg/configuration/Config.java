@@ -1,4 +1,4 @@
-package com.pikkvile.tools.eg;
+package com.pikkvile.tools.eg.configuration;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

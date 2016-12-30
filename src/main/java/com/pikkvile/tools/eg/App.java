@@ -1,5 +1,9 @@
 package com.pikkvile.tools.eg;
 
+import com.pikkvile.tools.eg.configuration.Config;
+import com.pikkvile.tools.eg.configuration.Key;
+import com.pikkvile.tools.eg.configuration.KeysExtractor;
+
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;

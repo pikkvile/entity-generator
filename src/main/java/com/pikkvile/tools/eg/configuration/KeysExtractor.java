@@ -1,4 +1,6 @@
-package com.pikkvile.tools.eg;
+package com.pikkvile.tools.eg.configuration;
+
+import com.pikkvile.tools.eg.configuration.Key;
 
 import java.util.Map;
 import java.util.regex.Matcher;

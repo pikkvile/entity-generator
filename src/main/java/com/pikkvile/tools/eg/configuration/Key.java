@@ -1,14 +1,14 @@
-package com.pikkvile.tools.eg;
+package com.pikkvile.tools.eg.configuration;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Key {
 
-    SOURCE("-S", "--source="),
-    OUTPUT("-O", "--output="),
-    PACKAGE("-P", "--package="),
-    TYPE("-T", "--default-type=");
+    SOURCE("S", "source"),
+    OUTPUT("O", "output"),
+    PACKAGE("P", "package"),
+    TYPE("T", "default-type");
 
     private final String shortRef;
     private final String longRef;

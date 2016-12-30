@@ -1,5 +1,7 @@
 package com.pikkvile.tools.eg;
 
+import com.pikkvile.tools.eg.configuration.Config;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

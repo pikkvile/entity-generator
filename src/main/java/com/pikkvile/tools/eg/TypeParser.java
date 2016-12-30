@@ -1,5 +1,8 @@
 package com.pikkvile.tools.eg;
 
+import com.pikkvile.tools.eg.configuration.Config;
+import com.pikkvile.tools.eg.enums.WellKnownTypes;
+
 import java.util.Arrays;
 
 public class TypeParser {
