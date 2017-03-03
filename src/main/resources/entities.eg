@@ -1,0 +1,2 @@
+User: long id, name, pass, Address address;
+Address: long id, city, street, house;
