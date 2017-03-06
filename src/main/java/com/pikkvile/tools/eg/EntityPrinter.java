@@ -18,7 +18,7 @@ public class EntityPrinter {
 
     public EntityPrinter(Config config) {
         this.config = config;
-        this.outputPath = Paths.get(config.getOutputPath());
+        this.outputPath = Paths.get(config.getOutputPath()).resolve(Paths.get(config.packageToPath()));
     }
 
     public void print(Entity entity) {
@@ -35,7 +35,7 @@ public class EntityPrinter {
     private OutputStream prepareFile(Entity entity) throws IOException {
         String fileName = entity.selfTypeName() + EXT;
         if (!Files.exists(outputPath)) {
-            Files.createDirectory(outputPath);
+            Files.createDirectories(outputPath);
         } else if (!Files.isDirectory(outputPath)) {
             throw new EgException("File " + outputPath + " already exists and is not a directory.");
         }

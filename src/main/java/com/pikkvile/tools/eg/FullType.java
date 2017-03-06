@@ -36,7 +36,6 @@ public class FullType {
     public void printPackage(PrintWriter writer) {
         if (!pkgName.isEmpty()) {
             writer.println(String.format(PACKAGE_DECLARATION, pkgName));
-            writer.println();
         }
     }
 

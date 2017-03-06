@@ -32,6 +32,10 @@ public class Config {
         return Optional.ofNullable(keys.get(Key.TYPE)).orElse(DEFAULT_TYPE);
     }
 
+    public String packageToPath() {
+        return getDefaultPackage().replace('.', '/');
+    }
+
     private String defaultPackage() {
         Path path = Paths.get("").toAbsolutePath();
         if (path.toString().contains("/java/")) {
