@@ -34,6 +34,11 @@ public class EntityPrinter {
 
     private OutputStream prepareFile(Entity entity) throws IOException {
         String fileName = entity.selfTypeName() + EXT;
+        if (!Files.exists(outputPath)) {
+            Files.createDirectory(outputPath);
+        } else if (!Files.isDirectory(outputPath)) {
+            throw new EgException("File " + outputPath + " already exists and is not a directory.");
+        }
         Path filePath = outputPath.resolve(fileName);
         return Files.newOutputStream(filePath);
     }
