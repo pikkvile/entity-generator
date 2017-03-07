@@ -11,35 +11,54 @@ import java.nio.file.Paths;
 
 public class EntityPrinter {
 
-    public final Config config;
-    public final Path outputPath;
+    private final Path interfacesPath;
+    private final Path implPath;
 
     private static final String EXT = ".java";
 
     public EntityPrinter(Config config) {
-        this.config = config;
-        this.outputPath = Paths.get(config.getOutputPath()).resolve(Paths.get(config.packageToPath()));
+        this.interfacesPath = Paths.get(config.getOutputPath()).resolve(Paths.get(config.packageToPath()));
+        this.implPath = interfacesPath.resolve("./impl");
     }
 
     public void print(Entity entity) {
         try {
-            OutputStream outputStream = prepareFile(entity);
-            PrintWriter writer = new PrintWriter(outputStream);
-            entity.print(writer);
-            writer.close();
+            printInterface(entity);
+            printImplementation(entity);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private OutputStream prepareFile(Entity entity) throws IOException {
-        String fileName = entity.selfTypeName() + EXT;
-        if (!Files.exists(outputPath)) {
-            Files.createDirectories(outputPath);
-        } else if (!Files.isDirectory(outputPath)) {
-            throw new EgException("File " + outputPath + " already exists and is not a directory.");
+    private void printImplementation(Entity entity) throws IOException {
+        OutputStream outputStream = prepareImplFile(entity);
+        PrintWriter writer = new PrintWriter(outputStream);
+        entity.printImpl(writer);
+        writer.close();
+    }
+
+    private void printInterface(Entity entity) throws IOException {
+        OutputStream outputStream = prepareInterfaceFile(entity);
+        PrintWriter writer = new PrintWriter(outputStream);
+        entity.printInterface(writer);
+        writer.close();
+    }
+
+    private OutputStream prepareInterfaceFile(Entity entity) throws IOException {
+        return prepareFile(interfacesPath, entity.selfTypeName() + EXT);
+    }
+
+    private OutputStream prepareImplFile(Entity entity) throws IOException {
+        return prepareFile(implPath, entity.selfTypeName() + FullType.IMPL + EXT);
+    }
+
+    private OutputStream prepareFile(Path path, String name) throws IOException {
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
+        } else if (!Files.isDirectory(path)) {
+            throw new EgException("File " + path + " already exists and is not a directory.");
         }
-        Path filePath = outputPath.resolve(fileName);
+        Path filePath = path.resolve(name);
         return Files.newOutputStream(filePath);
     }
 }

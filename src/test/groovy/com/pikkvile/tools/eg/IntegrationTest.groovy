@@ -2,34 +2,41 @@ package com.pikkvile.tools.eg
 
 import spock.lang.Specification
 
-import javax.tools.JavaCompiler
 import javax.tools.ToolProvider
 import java.nio.file.Files
 import java.nio.file.Paths
 
 class IntegrationTest extends Specification {
 
-    def TEST_OUT_DIR = './generated'
+    def javac = ToolProvider.getSystemJavaCompiler()
+    def fileManager = javac.getStandardFileManager(null, null, null)
+
+    def TEST_GENERATED_DIR = Paths.get('generated')
+    def TEST_SRC_DIR = TEST_GENERATED_DIR.resolve('src')
+    def TEST_CP = TEST_GENERATED_DIR.resolve('classes')
     def TEST_PACKAGE = 'org.test'
 
     def setup() {
-        def outputDir = new File(TEST_OUT_DIR)
-        outputDir.deleteDir()
+        TEST_GENERATED_DIR.toFile().deleteDir()
+        Files.createDirectories(TEST_CP)
     }
 
     def 'test simple entity generation'() {
         when:
-        App.main('--source=./src/test/resources/simple-entity.eg', '--output=' + TEST_OUT_DIR,
+        App.main('--source=./src/test/resources/simple-entity.eg', '--output=' + TEST_SRC_DIR,
                  '--package=' + TEST_PACKAGE)
         then:
-        Files.exists(Paths.get(TEST_OUT_DIR).resolve('org/test/Address.java'))
-        compile('Address')
-        //checkClassValid('Address')
+        def interfacePath = TEST_SRC_DIR.resolve('org/test/Address.java')
+        Files.exists(interfacePath)
+        def implPath = TEST_SRC_DIR.resolve('org/test/impl/AddressImpl.java')
+        Files.exists(implPath)
+        def ctask = compile(["-d", TEST_CP.toAbsolutePath().toString()],
+                fileManager.getJavaFileObjectsFromFiles([interfacePath.toFile(), implPath.toFile()]))
+        ctask.call()
     }
 
-    def compile(String className) {
-        JavaCompiler javac = ToolProvider.getSystemJavaCompiler()
-        javac.run(null, null, null, Paths.get(TEST_OUT_DIR).resolve('org/test/Address.java').toAbsolutePath().toString())
+    def compile(opts, units) {
+        javac.getTask(null, null, null, opts, null, units)
 
     }
 

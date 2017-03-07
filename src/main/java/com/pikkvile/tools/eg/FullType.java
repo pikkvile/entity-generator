@@ -12,8 +12,11 @@ public class FullType {
 
     private static final String PACKAGE_DECLARATION = "package %s;";
     private static final String IMPORT_DECLARATION = "import %s;";
-    private static final String CLASS_DECLARATION_START = "public class %s {";
+    private static final String IMPL_CLASS_DECLARATION_START = "public class %s implements %s {";
+    private static final String INTERFACE_DECLARATION_START = "public interface %s {";
     private static final String FIELD_DECLARATION_START = "    private final %s ";
+    private static final String BUILDER_CONSTRUCTOR_START = "\n    %s(Builder builder) {";
+    public static final String IMPL = "Impl";
 
     private static final String JAVA_LANG = "java.lang";
     private static final Set<String> PRIMITIVES =
@@ -39,18 +42,36 @@ public class FullType {
         }
     }
 
+    public void printImplPackage(PrintWriter writer) {
+        if (!pkgName.isEmpty()) {
+            writer.println(String.format(PACKAGE_DECLARATION, pkgName + ".impl"));
+        }
+    }
+
     public void printImport(PrintWriter writer, FullType entityType) {
         if (!this.isInSamePackage(entityType) && !this.isEmbedded()) {
             writer.println(String.format(IMPORT_DECLARATION, pkgName));
         }
     }
 
-    public void printClassDeclarationStart(PrintWriter writer) {
-        writer.println(String.format(CLASS_DECLARATION_START, selfName));
+    public void printImplClassDeclarationStart(PrintWriter writer) {
+        writer.println(String.format(IMPL_CLASS_DECLARATION_START, selfName + IMPL, selfName));
+    }
+
+    public void printInterfaceDeclarationStart(PrintWriter writer) {
+        writer.println(String.format(INTERFACE_DECLARATION_START, selfName));
     }
 
     public void printFieldDeclarationStart(PrintWriter writer) {
         writer.print(String.format(FIELD_DECLARATION_START, selfName));
+    }
+
+    public void printInterfaceImport(PrintWriter writer) {
+        writer.println(String.format(IMPORT_DECLARATION, pkgName + "." + selfName));
+    }
+
+    public void printBuilderConstructorStart(PrintWriter writer) {
+        writer.println(String.format(BUILDER_CONSTRUCTOR_START, selfName + IMPL));
     }
 
     private boolean isEmbedded() {
